@@ -2,8 +2,8 @@
 A custom electronics board designed to run a 2WD, IR-controlled differential robot vehicle. 
 The industry standard KiCad software kit was used for development.
 
-**Constraints and Specifications**
-o Board was built into less than 100mm x 100mm space.
+## Constraints and Specifications
+o Board was built into less than 100mm x 100mm space\n.
 o Fabricated with 2-Layer Rigid FR-4, using Robotistan PCB Service.
 o Supports 2S-6S Lipo battery input // (4.5V-40V  Input Voltage Range)
 o Compatible to work with all 5V-based microcontrollers.
