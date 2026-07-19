@@ -1,75 +1,85 @@
-# mini-racecar-electronics
-A custom electronics board designed to run a 2WD, IR-controlled differential robot vehicle. 
-The industry standard KiCad software kit was used for development.
+# Mini Racecar Electronics
 
-## Constraints and Specifications
-o Board was built into less than 100mm x 100mm space\n.
-o Fabricated with 2-Layer Rigid FR-4, using Robotistan PCB Service.
-o Supports 2S-6S Lipo battery input // (4.5V-40V  Input Voltage Range)
-o Compatible to work with all 5V-based microcontrollers.
-o Made to power low-reduction 3-6V TT motors with from 150 mA (no load) to 1.5A (stall) range.
+A custom electronics board for a **2WD, IR-controlled differential-drive robot vehicle**, designed in **KiCad**.
 
-## Components & Associated Footprints
+---
 
-C1 = 100 uf 16V
-C2 = 220 uf 16V
-C3 = 0.47 uf // SMD 0805
-C4 = 0.47 uf // SMD  0805
-C5 = 0.1 uf // SMD 0805
-C6 = 0.1 uf // SMD 0805
-C7 =  1 uf  // SMD 1206
-C8 = 10 uf // SMD 1206
-C9 = 470 uf 16V
-C10 =  0.1 uf // SMD 0805
-C11 = 0.47 uf // SMD 0805
-C12 = 470 uf 16V
-C13 = 1 uf  // SMD 1206 
-C14 = 0.47 uf // SMD 0805 
-C15 = 10 uf // SMD 1206 
-C16 = 0.1 uf // SMD 0805
+## Overview
 
-D1 = 5A 100V Schottky Diode
-D2 = 1N4148 // Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal  
-D3 = 1N4148 // Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal 
-D4 = 1N4148 // Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal 
-D5 = 1N4148 // Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal 
-D6 = 1N4148 // Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal 
-D7 = MURS260 // Diode_SMD:D_SMB_Handsoldering
-D8 = MURS260 // Diode_SMD:D_SMB_Handsoldering 
-D9 = MURS260 // Diode_SMD:D_SMB_Handsoldering 
-D10 = 1N4148 // Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal 
-D11 = 1N4148 // Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal 
-D12 = 1N4148 // Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal  
-D13 = MURS260 // Diode_SMD:D_SMB_Handsoldering 
+| | |
+|---|---|
+| **Form factor** | < 100 mm × 100 mm |
+| **Fabrication** | 2-layer rigid FR-4, via Robotistan PCB Service |
+| **Battery input** | 2S–6S LiPo (4.5 V – 40 V input range) |
+| **Logic compatibility** | Any 5 V-based microcontroller |
+| **Motor support** | Low-reduction 3–6 V TT motors, 150 mA (no load) – 1.5 A (stall) |
 
-IR_pins1 = CUSTOM 
-L1 = 33uh Inductor // Inductor_THT:L_Radial_D7.8mm_P5.00mm_Fastron_07HCP
+---
 
-Q1 = IRF540N: Package_TO_SOT_THT:TO-220-3_Vertical 
-Q2 = IRF540N: Package_TO_SOT_THT:TO-220-3_Vertical 
-Q3 = IRF540N: Package_TO_SOT_THT:TO-220-3_Vertical 
-Q4 = IRF540N: Package_TO_SOT_THT:TO-220-3_Vertical 
-Q5 = IRF540N: Package_TO_SOT_THT:TO-220-3_Vertical 
-Q6 = IRF540N: Package_TO_SOT_THT:TO-220-3_Vertical 
-Q7 = IRF540N: Package_TO_SOT_THT:TO-220-3_Vertical 
-Q8 = IRF540N: Package_TO_SOT_THT:TO-220-3_Vertical 
+## Power & Drive Architecture
 
-R1 = 10 // Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder 
-R2 = 10 // Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder 
-R3 = 10 // Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder 
-R4 = 10 // Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder  
-R5 = 0.1 // Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder  
-R6 = 10 // Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder  
-R7 = 10 // Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder 
-R8 = 0.1 // Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder 
-R9 = 10 // Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder 
-R10 = 10 // Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder 
+The board combines a **buck-style power stage** (inductor + Schottky + electrolytic caps) to step the LiPo input down for logic rails, and a **dual full H-bridge** built from discrete `IRF540N` MOSFETs (driven via `IR2104` half-bridge drivers) to independently control two DC motors for differential steering. IR receiver pins bring in the remote-control signal.
 
-IR2104 (x4) = Package_DIP:DIP-8_W7.62mm
+---
 
-Load1, Load2, Input = TerminalBlock:TerminalBlock_MaiXu_MX126-5.0-02P_1x02_P5.00mm
+## Bill of Materials
 
-IR_pins = Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical
+### Power Stage
 
+| Ref | Value | Notes |
+|---|---|---|
+| L1 | 33 µH | Radial inductor, Fastron 07HCP |
+| D1 | 5 A / 100 V Schottky | Buck rectifier |
+| Q — power switching | 8× IRF540N | TO-220, vertical |
+| IC — gate drivers | 4× IR2104 | DIP-8, half-bridge driver |
+
+### Capacitors
+
+| Ref | Value | Package |
+|---|---|---|
+| C1 | 100 µF / 16 V | Electrolytic |
+| C2 | 220 µF / 16 V | Electrolytic |
+| C9 | 470 µF / 16 V | Electrolytic |
+| C12 | 470 µF / 16 V | Electrolytic |
+| C7, C13 | 1 µF | SMD 1206 |
+| C8, C15 | 10 µF | SMD 1206 |
+| C3, C4, C11, C14 | 0.47 µF | SMD 0805 |
+| C5, C6, C10, C16 | 0.1 µF | SMD 0805 |
+
+### Diodes
+
+| Ref | Value | Package |
+|---|---|---|
+| D1 | 5 A / 100 V Schottky | — |
+| D2, D3, D4, D5, D6, D10, D11, D12 | 1N4148 | THT DO-35, 7.62 mm |
+| D7, D8, D9, D13 | MURS260 | SMD, SMB |
+
+### MOSFETs & Gate Drive
+
+| Ref | Part | Package |
+|---|---|---|
+| Q1–Q8 | IRF540N | TO-220-3, vertical |
+| IR2104 ×4 | Half-bridge driver | DIP-8 |
+
+### Resistors
+
+| Ref | Value (Ω) | Package |
+|---|---|---|
+| R1, R2, R3, R4, R6, R7, R9, R10 | 10 | SMD 0805 |
+| R5, R8 | 0.1 (current sense) | SMD 0805 |
+
+### Connectors
+
+| Ref | Type | Footprint |
+|---|---|---|
+| Load1, Load2, Input | 2-pin terminal block | MaiXu MX126-5.0-02P, 5.00 mm pitch |
+| IR_pins | 3-pin header | 2.54 mm pin header, vertical |
+| IR_pins1 | Custom | — |
+
+---
+
+## Tooling
+
+Designed entirely in **KiCad**.
 
 
